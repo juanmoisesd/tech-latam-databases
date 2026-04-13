@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Technology & Digital Adoption in Latin America (2018-2024)</title>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+      <style>
+                * {
+                              margin: 0;
+                              padding: 0;
+                              box-sizing: border-box;
+                }
+
+                body {
+                              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                              min-height: 100vh;
+                              padding: 20px;
+                              color: #333;
+                }
+
+                .container {
+                              max-width: 1400px;
+                              margin: 0 auto;
+                }
+
+                header {
+                              background: white;
+                              padding: 30px;
+                              border-radius: 10px;
+                              margin-bottom: 30px;
+                              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                }
+
+                h1 {
+                              color: #667eea;
+                              margin-bottom: 10px;
+                              font-size: 2.5em;
+                }
+
+                .subtitle {
+                              color: #666;
+                              font-size: 1.1em;
+                }
+
+                .controls {
+                              background: white;
+                              padding: 20px;
+                              border-radius: 10px;
+                              margin-bottom: 30px;
+                              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                              display: grid;
+                              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                              gap: 15px;
+                }
+
+                .control-group {
+                              display: flex;
+                              flex-direction: column;
+                }
+
+                .control-group label {
+                              font-weight: 600;
+                              margin-bottom: 8px;
+                              color: #333;
+                }
+
+                select, input {
+                              padding: 10px;
+                              border: 2px solid #e0e0e0;
+                              border-radius: 5px;
+                              font-size: 1em;
+                              transition: border-color 0.3s;
+                }
+
+                select:focus, input:focus {
+                              outline: none;
+                              border-color: #667eea;
+                }
+
+                .dashboard {
+                              display: grid;
+                              grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+                              gap: 30px;
+                              margin-bottom: 30px;
+                }
+
+                .card {
+                              background: white;
+                              padding: 25px;
+                              border-radius: 10px;
+                              box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                              transition: transform 0.3s, box-shadow 0.3s;
+                }
+
+                .card:hover {
+                              transform: translateY(-5px);
+                              box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+                }
+
+                .card h2 {
+                              color: #667eea;
+                              margin-bottom: 20px;
+                              font-size: 1.5em;
+                              border-bottom: 3px solid #667eea;
+                              padding-bottom: 10px;
+                }
+
+                .chart-container {
+                              position: relative;
+                              height: 300px;
+                              margin-bottom: 20px;
+        }
+
+                .stats {
+                              display: grid;
+                              grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                              gap: 15px;
+                              margin-top: 20px;
+                }
+
+                .stat {
+                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                              color: white;
+                              padding: 15px;
+                              border-radius: 8px;
+                              text-align: center;
+                }
+
+                .stat-value {
+                              font-size: 1.8em;
+                              font-weight: bold;
+                              margin-bottom: 5px;
+                }
+
+                .stat-label {
+                              font-size: 0.9em;
+                              opacity: 0.9;
+                }
+
+                table {
+                              width: 100%;
+                              border-collapse: collapse;
+                              margin-top: 15px;
+                }
+
+                th, td {
+                              padding: 12px;
+                              text-align: left;
+                              border-bottom: 1px solid #e0e0e0;
+                }
+
+                th {
+                              background: #f5f5f5;
+                              font-weight: 600;
+                              color: #667eea;
+                }
+
+                tr:hover {
+                              background: #f9f9f9;
+                }
+
+                footer {
+                              background: white;
+                              padding: 20px;
+                              border-radius: 10px;
+                              text-align: center;
+                              margin-top: 30px;
+                              color: #666;
+                }
+
+                .info-box {
+                              background: #f0f4ff;
+                              border-left: 4px solid #667eea;
+                              padding: 15px;
+                              margin-bottom: 20px;
+                              border-radius: 5px;
+                }
+
+                @media (max-width: 768px) {
+                              .dashboard {
+                                                grid-template-columns: 1fr;
+                              }
+
+                              h1 {
+                                                font-size: 1.8em;
+                              }
+                }
+            </style>
+  </head>
+  <body>
+        <div class="container">
+                  <header>
+                                <h1>📊 Technology & Digital Adoption in Latin America</h1>
+                              <p class="subtitle">10 Longitudinal Databases (2018-2024) | 6 Countries | Comprehensive Analysis</p>p>
+                              <div class="info-box">
+                                              <strong>Dataset Source:</strong> Mendeley Data (DOI: 10.17632/szcpg6xh8s.1) | 
+                                              <strong>Datasets:</strong> Internet Penetration, Broadband, Active Users, AI Adoption, E-commerce, Digital Transformation, Social Media, Smartphones, Fintech, Digital Divides
+                              </div>div>
+                  </header>
+                
+                <div class="controls">
+                            <div class="control-group">
+                                            <label for="countrySelect">Select Country:</label>label>
+                                            <select id="countrySelect">
+                                                                <option value="all">All Countries</option>option>
+                                                                <option value="Brazil">Brazil</option>option>
+                                                                <option value="Mexico">Mexico</option>option>
+                                                                <option value="Colombia">Colombia</option>option>
+                                                                <option value="Argentina">Argentina</option>option>
+                                                                <option value="Chile">Chile</option>option>
+                                                                <option value="Peru">Peru</option>option>
+                                            </select>select>
+                            </div>div>
+                            
+                            <div class="control-group">
+                                            <label for="metricSelect">Select Metric:</label>label>
+                                            <select id="metricSelect">
+                                                                <option value="internet_penetration">Internet Penetration</option>option>
+                                                                <option value="broadband">Broadband Access</option>option>
+                                                                <option value="active_users">Active Digital Users</option>option>
+                                                                <option value="ai_adoption">AI Adoption</option>option>
+                                                                <option value="ecommerce">E-commerce Activity</option>option>
+                                                                <option value="digital_transformation">Digital Transformation</option>option>
+                                                                <option value="social_media">Social Media Users</option>option>
+                                                                <option value="smartphones">Smartphone Penetration</option>option>
+                                                                <option value="fintech">Fintech Adoption</option>option>
+                                                                <option value="digital_divide">Digital Divide Index</option>option>
+                                            </select>select>
+                            </div>div>
+                </div>div>
+                
+                <div class="dashboard">
+                            <div class="card">
+                                            <h2>📈 Trend Analysis (2018-2024)</h2>
+                                            <div class="chart-container">
+                                                                <canvas id="trendChart"></canvas>canvas>
+                                            </div>div>
+                                            <p style="color: #666; font-size: 0.9em; margin-top: 15px;">
+                                                This chart shows the growth trend of the selected metric across the selected country or region over the 2018-2024 period.
+                                            </p>p>
+                            </div>div>
+                            
+                            <div class="card">
+                                            <h2>🌍 Country Comparison 2024</h2>
+                                            <div class="chart-container">
+                                                                <canvas id="comparisonChart"></canvas>canvas>
+                                            </div>div>
+                                            <p style="color: #666; font-size: 0.9em; margin-top: 15px;">
+                                                Comparison of the selected metric across all Latin American countries in 2024.
+                                            </p>p>
+                            </div>div>
+                            
+                            <div class="card">
+                                            <h2>📊 Key Metrics Summary</h2>
+                                            <div class="stats">
+                                                                <div class="stat">
+                                                                                        <div class="stat-value" id="stat1">-</div>div>
+                                                                                        <div class="stat-label">Latest Value</div>div>
+                                                                </div>div>
+                                                                <div class="stat">
+                                                                                        <div class="stat-value" id="stat2">-</div>div>
+                                                                                        <div class="stat-label">2024 Average</div>div>
+                                                                </div>div>
+                                                                <div class="stat">
+                                                                                        <div class="stat-value" id="stat3">-</div>div>
+                                                                                        <div class="stat-label">Growth Rate</div>div>
+                                                                </div>div>
+                                            </div>div>
+                            </div>div>
+                            
+                            <div class="card">
+                                            <h2>📋 Data Table</h2>
+                                            <table>
+                                                                  <thead>
+                                                                                            <tr>
+                                                                                                                          <th>Country</th>
+                                                                                              <th>2018</th>
+                                                                                              <th>2021</th>
+                                                                                              <th>2024</th>
+                                                                                              <th>Change</th>
+                                                                                            </tr>
+                                                                  </thead>
+                                                                <tbody id="dataTable">
+                                                                    <tr><td colspan="5">Select options to load data</td>td></tr>
+                                                                </tbody>tbody>
+                                            </table>
+                            </div>div>
+                </div>div>
+                
+                <footer>
+                              <p><strong>Technology & Digital Adoption Database</strong></p>
+                            <p>Data compiled from Mendeley Data | License: CC BY 4.0</p>
+                            <p>For more information, visit: <a href="https://github.com/juanmoisesd/tech-latam-databases" style="color: #667eea;">GitHub Repository</a>a></p>
+                            <p style="margin-top: 15px; font-size: 0.9em;">
+                                Countries: Brazil, Mexico, Colombia, Argentina, Chile, Peru | Period: 2018-2024 | 10 Comprehensive Databases
+                            </p>
+                </footer>
+        </div>div>
+      
+      <script>
+                // Sample data - in production this would come from CSV files
+                const data = {
+                              internet_penetration: {
+                                                Brazil: [65, 70, 75, 80, 83, 86, 88],
+                                                Mexico: [58, 63, 68, 74, 77, 80, 83],
+                                                Colombia: [62, 67, 72, 78, 81, 84, 86],
+                                                Argentina: [72, 76, 80, 85, 88, 90, 92],
+                                                Chile: [75, 80, 84, 88, 90, 92, 94],
+                                                Peru: [52, 57, 62, 69, 73, 77, 81]
+                              },
+                              broadband: {
+                                                Brazil: [35, 42, 50, 58, 64, 70, 75],
+                                                Mexico: [28, 35, 42, 50, 57, 64, 70],
+                                                Colombia: [32, 40, 48, 56, 63, 70, 76],
+                                                Argentina: [42, 50, 58, 66, 73, 78, 82],
+                                                Chile: [48, 56, 64, 72, 78, 83, 87],
+                                                Peru: [22, 28, 35, 43, 50, 58, 65]
+                              },
+                              active_users: {
+                                                Brazil: [70, 75, 80, 85, 88, 91, 93],
+                                                Mexico: [62, 68, 74, 80, 83, 86, 88],
+                                                Colombia: [65, 71, 77, 83, 86, 88, 90],
+                                                Argentina: [75, 80, 84, 88, 90, 92, 94],
+                                                Chile: [78, 82, 86, 89, 91, 93, 95],
+                                                Peru: [55, 61, 67, 75, 79, 83, 86]
+                              },
+                              ai_adoption: {
+                                                Brazil: [12, 18, 25, 35, 45, 55, 65],
+                                                Mexico: [10, 15, 22, 32, 42, 52, 62],
+                                                Colombia: [8, 12, 18, 28, 38, 48, 58],
+                                                Argentina: [15, 22, 30, 40, 50, 60, 70],
+                                                Chile: [18, 25, 35, 45, 55, 65, 75],
+                                                Peru: [5, 8, 12, 20, 30, 40, 50]
+                              },
+                              ecommerce: {
+                                                Brazil: [38, 45, 52, 60, 68, 75, 80],
+                                                Mexico: [28, 35, 42, 50, 58, 65, 72],
+                                                Colombia: [25, 32, 40, 50, 60, 68, 75],
+                                                Argentina: [35, 42, 50, 60, 68, 75, 82],
+                                                Chile: [40, 48, 56, 65, 73, 80, 85],
+                                                Peru: [18, 25, 32, 42, 52, 62, 70]
+                              },
+                              digital_transformation: {
+                                                Brazil: [45, 52, 60, 70, 78, 85, 90],
+                                                Mexico: [38, 45, 52, 62, 70, 78, 85],
+                        Colombia: [35, 42, 50, 60, 68, 76, 83],
+                                                Argentina: [48, 56, 64, 74, 82, 88, 93],
+                                                Chile: [52, 60, 68, 78, 85, 90, 95],
+                                                Peru: [28, 35, 42, 52, 62, 72, 80]
+                              },
+                              social_media: {
+                                                Brazil: [72, 78, 83, 88, 91, 93, 95],
+                                                Mexico: [68, 74, 80, 85, 89, 91, 93],
+                                                Colombia: [70, 76, 82, 87, 90, 92, 94],
+                                                Argentina: [74, 80, 85, 89, 92, 94, 96],
+                                                Chile: [76, 82, 87, 90, 93, 95, 97],
+                                                Peru: [62, 69, 76, 82, 87, 90, 92]
+                              },
+                              smartphones: {
+                                                Brazil: [68, 74, 80, 85, 89, 92, 95],
+                                                Mexico: [62, 69, 76, 82, 86, 89, 92],
+                                                Colombia: [64, 71, 78, 84, 88, 91, 94],
+                                                Argentina: [70, 77, 83, 88, 91, 94, 96],
+                                                Chile: [72, 79, 85, 90, 93, 95, 97],
+                                                Peru: [55, 62, 70, 78, 84, 88, 91]
+                              },
+                              fintech: {
+                                                Brazil: [28, 36, 45, 55, 65, 74, 82],
+                                                Mexico: [22, 30, 38, 48, 58, 67, 76],
+                                                Colombia: [20, 28, 36, 46, 56, 65, 74],
+                                                Argentina: [32, 42, 52, 62, 72, 80, 87],
+                                                Chile: [35, 45, 55, 65, 75, 83, 90],
+                                                Peru: [15, 22, 30, 40, 50, 60, 70]
+                              },
+                              digital_divide: {
+                                                Brazil: [35, 30, 25, 20, 17, 14, 12],
+                                                Mexico: [42, 37, 32, 27, 23, 20, 17],
+                                                Colombia: [40, 35, 30, 25, 21, 18, 15],
+                                                Argentina: [28, 24, 20, 16, 13, 10, 8],
+                                                Chile: [25, 20, 16, 12, 9, 7, 5],
+                                                Peru: [48, 43, 38, 32, 27, 22, 19]
+                              }
+                };
+
+                const years = [2018, 2019, 2020, 2021, 2022, 2023, 2024];
+                const countries = ['Brazil', 'Mexico', 'Colombia', 'Argentina', 'Chile', 'Peru'];
+
+                let trendChart, comparisonChart;
+
+                function updateCharts() {
+                              const selectedCountry = document.getElementById('countrySelect').value;
+                              const selectedMetric = document.getElementById('metricSelect').value;
+                    const metricData = data[selectedMetric];
+
+                              // Update trend chart
+                              if (trendChart) {
+                                                trendChart.destroy();
+                              }
+
+                              if (selectedCountry === 'all') {
+                                                const datasets = countries.map((country, idx) => ({
+                                                                      label: country,
+                                                                      data: metricData[country],
+                                                                      borderColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe', '#43e97b'][idx],
+                                                                      backgroundColor: ['rgba(102, 126, 234, 0.1)', 'rgba(118, 75, 162, 0.1)', 'rgba(240, 147, 251, 0.1)', 'rgba(79, 172, 254, 0.1)', 'rgba(0, 242, 254, 0.1)', 'rgba(67, 233, 123, 0.1)'][idx],
+                                      tension: 0.4,
+                                                                      fill: false,
+                                                                      pointRadius: 4,
+                                                    pointHoverRadius: 6
+                                                }));
+
+                                                const ctx1 = document.getElementById('trendChart').getContext('2d');
+                                                trendChart = new Chart(ctx1, {
+                                                                      type: 'line',
+                                                                      data: {
+                                                                                                labels: years,
+                                                                                                datasets: datasets
+                                                                        },
+                                                                      options: {
+                                                                                                responsive: true,
+                                                                                                maintainAspectRatio: false,
+                                                                                                plugins: {
+                                                                                                                              legend: {
+                                                                                                                                                                display: true,
+                                                                                                                                                                position: 'top'
+                                                                                                                                }
+                                                                                                  },
+                                                                                                scales: {
+                                                                                                                              y: {
+                                                                                                                                                                beginAtZero: true,
+                                                                                                                                                                max: 100
+                                                                                                                                }
+                                                                                                  }
+                                                                        }
+                                                });
+                              } else {
+                                                const ctx1 = document.getElementById('trendChart').getContext('2d');
+                                                trendChart = new Chart(ctx1, {
+                                                                      type: 'line',
+                                                                      data: {
+                                                                                                labels: years,
+                                                                                                datasets: [{
+                                                                                                                              label: selectedCountry,
+                                                                                                                              data: metricData[selectedCountry],
+                                                                                                                              borderColor: '#667eea',
+                                                                                                                              backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                                                                                                                              tension: 0.4,
+                                                                                                                              fill: true,
+                                                                                                                              pointRadius: 5,
+                                                                                                                              pointBackgroundColor: '#667eea',
+                                                                                                                              pointBorderColor: '#fff',
+                                                                                                                              pointBorderWidth: 2,
+                                                                                                                              pointHoverRadius: 7
+                                                                                                  }]
+                                                                        },
+                                                                      options: {
+                                                                                                responsive: true,
+                                                                                                maintainAspectRatio: false,
+                                                                                                plugins: {
+                                                                                                                              legend: {
+                                                                                                                                                                display: true
+                                                                                                                                }
+        },
+                                                                                                scales: {
+                                                                                                                              y: {
+                                                                                                                                                                beginAtZero: true,
+                                                                                                                                                                max: 100
+                                                                                                                                }
+                                                                                                                                                        }
+        }
+                                });
+                                                            }
+
+                                                                     // Update comparison chart
+                              if (comparisonChart) {
+                                                comparisonChart.destroy();
+                              }
+
+                              const latest2024Data = countries.map(country => metricData[country][6]);
+
+                              const ctx2 = document.getElementById('comparisonChart').getContext('2d');
+                              comparisonChart = new Chart(ctx2, {
+                                                type: 'bar',
+                                                data: {
+                                                                      labels: countries,
+                                                                      datasets: [{
+                                label: selectedMetric.replace(/_/g, ' '),
+                                                                                 data: latest2024Data,
+                                                                                                backgroundColor: [
+                                                                                                                              'rgba(102, 126, 234, 0.8)',
+                                                                                                                              'rgba(118, 75, 162, 0.8)',
+                                                                                                                              'rgba(240, 147, 251, 0.8)',
+                                                                                                                              'rgba(79, 172, 254, 0.8)',
+                                                                                                                              'rgba(0, 242, 254, 0.8)',
+                                                                                                                              'rgba(67, 233, 123, 0.8)'
+                                                                                                                          ]
+                                                                        }]
+                                                },
+                                                options: {
+                                                                      responsive: true,
+                                                                      maintainAspectRatio: false,
+                                                                      plugins: {
+                                                                                                legend: {
+                                                                                                                              display: true
+                                                                                                  }
+                                                                        },
+                                                                      scales: {
+                                                                                                y: {
+                                                                                                                              beginAtZero: true,
+                                                                                                                              max: 100
+                                                                                                  }
+                                                                        }
+                                                }
+                              });
+
+                              // Update stats
+                              if (selectedCountry !== 'all') {
+                                                const countryData = metricData[selectedCountry];
+                                                document.getElementById('stat1').textContent = countryData[6].toFixed(1) + '%';
+                                                document.getElementById('stat2').textContent = (countryData.reduce((a,b) => a+b) / countryData.length).toFixed(1) + '%';
+                                                document.getElementById('stat3').textContent = ((countryData[6] - countryData[0]).toFixed(1)) + '%';
+                              } else {
+                                                const avgData = countries.map(c => metricData[c][6]).reduce((a,b) => a+b) / countries.length;
+                                                document.getElementById('stat1').textContent = avgData.toFixed(1) + '%';
+                                                document.getElementById('stat2').textContent = avgData.toFixed(1) + '%';
+                                                document.getElementById('stat3').textContent = 'Multi-country';
+                              }
+
+                              // Update table
+                              updateTable(selectedMetric, selectedCountry);
+                }
+
+                function updateTable(metric, country) {
+                              const tbody = document.getElementById('dataTable');
+                              tbody.innerHTML = '';
+
+                              const metricData = data[metric];
+
+                              if (country === 'all') {
+                                                countries.forEach(c => {
+                                                                      const row = document.createElement('tr');
+                                                                      row.innerHTML = `
+                                                                                              <td><strong>${c}</strong></td>
+                                                                                                                      <td>${metricData[c][0].toFixed(1)}%</td>
+                                                                                                                                              <td>${metricData[c][3].toFixed(1)}%</td>
+                                                                                                                                                                      <td>${metricData[c][6].toFixed(1)}%</td>
+                                                                                                                                                                                              <td>${(metricData[c][6] - metricData[c][0]).toFixed(1)}%</td>
+                                                                                                                                                                                                                  `;
+                                                                      tbody.appendChild(row);
+                                                });
+                              } else {
+                                                const countryData = metricData[country];
+                                                const row = document.createElement('tr');
+                                                row.innerHTML = `
+                                                                    <td><strong>${country}</strong></td>
+                                                                                        <td>${countryData[0].toFixed(1)}%</td>
+                                                                                                            <td>${countryData[3].toFixed(1)}%</td>
+                                                                                                                                <td>${countryData[6].toFixed(1)}%</td>
+                                                                                                                                                    <td>${(countryData[6] - countryData[0]).toFixed(1)}%</td>
+                                                                                                                                                                    `;
+                                                tbody.appendChild(row);
+                              }
+                }
+
+                document.getElementById('countrySelect').addEventListener('change', updateCharts);
+                document.getElementById('metricSelect').addEventListener('change', updateCharts);
+
+                // Initialize charts on page load
+                window.addEventListener('load', updateCharts);
+      </script>
+  </body>
+</html>html>
+
+      </script></strong></p>
+                </footer></tr></th></th>
+                                                                                            </tr>
+                                                                  </thead>
+                                            </table></strong></strong></h1>
+                  </header>
+  </body>
+      </style></title>
+  </head>
